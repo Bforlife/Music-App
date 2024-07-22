@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="music.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music player</title>
+    <script src="https://kit.fontawesome.com/c741bd4ca1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="music_player">
+        <nav>
+            <!-- menu bar -->
+            <div class="circle">
+                <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+          </nav>
+          <!-- image icon -->
+          <img src="media/468-thumbnail.png" class="song-img">
+          <h1>ASAKE</h1>
+          <p>Lorem ipsum dolor sit.</p>
+
+          <!-- audio controls -->
+          <audio id="song">
+            <source src="audio/Asake_-_Lonely_At_The_Top.mp3" type="audio/mpeg">
+          </audio>
+          <!-- progress bar -->
+          <input type="range" value="0" id="progress">
+
+          <div class="controls">
+            <!-- backward button -->
+            <div> <i class="fa-solid fa-backward-fast"></i></div>
+            <!-- play icon -->
+            <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlICON"></i></div>
+            <!-- forward icon -->
+               <div> <i class="fa-solid fa-forward-fast"></i></div>
+            </div>
+        
+        </div>
+    </div>
+</body>
+<script>
+    // select the id's involved
+    const progress=document.querySelector('#progress');
+    const song=document.querySelector('#song');
+    const ctrlICON=document.querySelector('#ctrlICON');
+
+    // track the time and duration of the progress bar
+    song.onloadedmetadata = function(){
+        progress.max=song.duration;
+        progress.value=song.currentTime;
+
+    }
+    // function for play and pause controls
+    function playPause(){
+        if (ctrlICON.classList.contains("fa-pause")) {
+            song.pause();
+            ctrlICON.classList.remove("fa-pause");
+            ctrlICON.classList.add("fa-play");
+        }
+        else{
+            song.play();
+            ctrlICON.classList.add("fa-pause");
+            ctrlICON.classList.remove("fa-play");
+        }
+    }
+    // progress bar movement
+    if(song.play()){
+        setInterval(()=>{
+            progress.value = song.currentTime;
+        },500)
+    }
+    // drag the progress bar to play a song at a particular time
+    progress.onchange = function(){
+        song.play();
+        song.currentTime=progress.value;
+        ctrlICON.classList.add("fa-pause");
+        ctrlICON.classList.remove("fa-play");
+    }
+
+</script>
+</html>
